@@ -1,9 +1,14 @@
-FROM nginx:alpine
+FROM node:16
 
-COPY build/ /usr/share/nginx/html
 
-COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /usr/src/app
 
-EXPOSE 80
 
-CMD [ "nginx","-g","daemon off;" ]
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 4000
+CMD [ "node", "index.js" ]
